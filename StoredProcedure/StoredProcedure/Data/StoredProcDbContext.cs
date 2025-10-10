@@ -10,5 +10,7 @@ namespace StoredProcedure.Data
             :base(options) { }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Customers> Customers { get; set; }
+
     }
 }
