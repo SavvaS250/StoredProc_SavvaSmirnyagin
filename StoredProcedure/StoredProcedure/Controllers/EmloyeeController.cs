@@ -1,8 +1,11 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Text;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using StoredProcedure.Data;
 using StoredProcedure.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StoredProcedure.Controllers
 {
@@ -134,7 +137,7 @@ namespace StoredProcedure.Controllers
         }
 
         [HttpPost]
-        public IActionResult SearchWithDynamicSQL(string firstName, string lastName, string gender, int salary)
+        public IActionResult SearchDynamicSQL(string firstName, string lastName, string gender, int salary)
         {
             string connectionStr = _config.GetConnectionString("DefaultConnection");
             using (SqlConnection con = new SqlConnection(connectionStr))
@@ -190,5 +193,38 @@ namespace StoredProcedure.Controllers
             }
         }
 
+
+     
+
     }
 }
+
+//  create proc spSearchEmployeesGoodDynamicSQL
+//@FirstName nvarchar(100) = NULL,
+//@LastName nvarchar(100) = NULL,
+//@Gender nvarchar(50) = NULL,
+//@Salary int = NULL
+//as begin
+//declare @sql nvarchar(max)
+
+//set @sql = 'Select * from Employees where 1 = 1'
+
+//if(@FirstName is not NULL)
+
+//    set @sql = @sql + ' and FirstName=@FN'
+//if(@LastName is not NULL)
+
+//    set @sql = @sql + ' and LastName=@LN'
+//if(@Gender is not NULL)
+
+//    set @sql = @sql + ' and Gender=@Gen'
+//if(@Salary is not NULL)
+
+//  set @sql = @sql + ' and Salary=@Sal'
+
+
+//execute sp_executesql @sql,
+//N'@FN nvarchar(50), @LN nvarchar(50), @Gen nvarchar(50), @Sal int',
+//@FN=@FirstName, @LN=@LastName, @Gen=@Gender, @Sal=@salary
+//end
+//go
